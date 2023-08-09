@@ -78,7 +78,7 @@ PODS:
     - hermes-engine/Pre-built (= 0.71.10)
   - hermes-engine/Pre-built (0.71.10)
   - libevent (2.1.12)
-  - Mappy (0.8.6):
+  - Mappy (0.8.7-beta2):
     - ArcGIS-Runtime-SDK-iOS (= 100.15.2)
     - XCCocoaLumberjackSwift (= 3.7.4-SPM2)
     - XCKeychainAccess (= 4.2.2-SPM)
@@ -88,6 +88,10 @@ PODS:
     - XCSwinject (= 2.8.2-SPM)
     - XCZIPFoundation (= 0.9.15-SPM)
   - OpenSSL-Universal (1.1.1100)
+  - Permission-LocationAlways (3.8.0):
+    - RNPermissions
+  - Permission-LocationWhenInUse (3.8.0):
+    - RNPermissions
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -516,8 +520,10 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
-  - Mappy (= 0.8.6)
+  - Mappy (= 0.8.7-beta2)
   - OpenSSL-Universal (= 1.1.1100)
+  - Permission-LocationAlways (from `../node_modules/react-native-permissions/ios/LocationAlways/Permission-LocationAlways.podspec`)
+  - Permission-LocationWhenInUse (from `../node_modules/react-native-permissions/ios/LocationWhenInUse/Permission-LocationWhenInUse.podspec`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -556,8 +562,21 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - ArcGIS-Runtime-SDK-iOS
+    - Mappy
+    - XCCocoaLumberjack
+    - XCCocoaLumberjackSwift
+    - XCKeychainAccess
+    - XCNWWebSocket
+    - XCPusherSwift
+    - XCReachabilitySwift
+    - XCRealm
+    - XCRealmSwift
+    - XCSwinject
+    - XCTweetNacl
+    - XCZIPFoundation
+  trunk:
     - CocoaAsyncSocket
     - Flipper
     - Flipper-Boost-iOSX
@@ -570,20 +589,8 @@ SPEC REPOS:
     - FlipperKit
     - fmt
     - libevent
-    - Mappy
     - OpenSSL-Universal
     - SocketRocket
-    - XCCocoaLumberjack
-    - XCCocoaLumberjackSwift
-    - XCKeychainAccess
-    - XCNWWebSocket
-    - XCPusherSwift
-    - XCReachabilitySwift
-    - XCRealm
-    - XCRealmSwift
-    - XCSwinject
-    - XCTweetNacl
-    - XCZIPFoundation
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -599,6 +606,10 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
+  Permission-LocationAlways:
+    :path: "../node_modules/react-native-permissions/ios/LocationAlways/Permission-LocationAlways.podspec"
+  Permission-LocationWhenInUse:
+    :path: "../node_modules/react-native-permissions/ios/LocationWhenInUse/Permission-LocationWhenInUse.podspec"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -688,8 +699,10 @@ SPEC CHECKSUMS:
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   hermes-engine: d27603b55a48402501ad1928c05411dae9cd6b85
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  Mappy: 910927501c0397f271ab2300dbb24ef110f04109
+  Mappy: 6a3b9289cbcbdf3a1902051fda2d1084d0a9c7c9
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
+  Permission-LocationAlways: e7ce67f3091ec096b6ac274bc30a18830a66b33c
+  Permission-LocationWhenInUse: 1c80e4797ae587642a83125e80b86686cefeba53
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 8ef706f91e2b643cd32c26a57700b5f24fab0585
   RCTTypeSafety: 5fbddd8eb9242b91ac0d901c01da3673f358b1b7
@@ -738,6 +751,6 @@ SPEC CHECKSUMS:
   Yoga: e7ea9e590e27460d28911403b894722354d73479
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: d3308233af2b765f508311eeddc315234cc387a4
+PODFILE CHECKSUM: 7032e06bf6623a970e857a43c26464b730d4d932
 
 COCOAPODS: 1.12.1
