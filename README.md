@@ -48,6 +48,11 @@ To start using this project, follow these steps:
 
    ```shell
    npx react-native run-android  # For Android
-   npx react-native run-ios      # For iOS
+   
+   # For iOS
+   cd ios 
+   pod install
+   cd ..
+   npx react-native run-ios --simulator='iPhone SE (3rd generation)'
    
 4. Test the application to ensure that it's working as expected.

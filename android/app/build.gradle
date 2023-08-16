@@ -178,7 +178,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0"
 
     // Mappy SDK
-    implementation("io.github.bemappy:mappy:0.10.10")
+    implementation("io.github.bemappy:mappy:0.10.13")
     implementation("com.esri.arcgisruntime:arcgis-android:100.15.2")
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")

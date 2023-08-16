@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, SafeAreaView, ScrollView, ActivityIndicator, PermissionsAndroid, Platform } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, ActivityIndicator, Platform } from 'react-native';
+import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import VenueList from './app/VenueList';
 import MappyModule from './modules/MappyModule'; // Import the MappyModule
 import MapScreen from './app/MapScreen'; // Import the MapScreen component
+import VenuesService from './app/bridge/VenuesService';
+import MappyCore from './app/bridge/MappyCore';
 
 const Stack = createStackNavigator();
 
@@ -20,41 +23,54 @@ const HomeScreen = () => {
 
   // Request location permission
   const requestLocationPermission = async () => {
-    if (Platform.OS === 'android') {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: 'Location Permission',
-            message: 'This app needs access to your location.',
-            buttonPositive: 'OK',
-          }
-        );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('Location permission granted');
-        } else {
-          console.log('Location permission denied');
-        }
-      } catch (error) {
-        console.warn('Location permission request error:', error);
-      }
+    const granted = await request(
+      Platform.select({
+        android: PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION,
+        ios: PERMISSIONS.IOS.LOCATION_ALWAYS
+      }),
+      {
+        title: 'Location Permission',
+        message: 'This app needs access to your location.',
+      },
+    );
+
+    if (granted === RESULTS.GRANTED) {
+      console.log('Location permission granted');
+    } else {
+      console.log('Location permission denied');
     }
   };
   
   // Load venues from MappyModule
   const loadVenues = () => {
-    // Call the native api using the bridge
-    MappyModule.loadVenues(
-      (venueArray: any) => {
-        console.log('Received venues:', venueArray);
-        setVenues(venueArray);
-        setIsLoading(false); // Finished loading, hide the indicator
-      },
-      (failure: any) => {
-        console.log('Failed:', failure);
-        setIsLoading(false); // Failed to load, hide the indicator
-      }
-    );
+    if (Platform.OS === 'android') {
+      // Call the native api using the bridge
+      MappyModule.loadVenues(
+        (venueArray: any) => {
+          console.log('Received venues:', venueArray);
+          setVenues(venueArray);
+          setIsLoading(false); // Finished loading, hide the indicator
+        },
+        (failure: any) => {
+          console.log('Failed:', failure);
+          setIsLoading(false); // Failed to load, hide the indicator
+        }
+      );
+    } else {
+      MappyCore.initialize()
+      .then(res => {
+        console.log(res);
+        // NativeModules.MappyVenuesService.getVenues()
+        VenuesService.getVenues()
+        .then(venueArray => {
+          console.log('Received venues:', venueArray);
+          setVenues(venueArray);
+          setIsLoading(false); // Finished loading, hide the indicator
+        })
+        .catch(e => console.log(e.message));
+      })
+      .catch(e => console.log(e.message));
+    }
   };
 
   return (
