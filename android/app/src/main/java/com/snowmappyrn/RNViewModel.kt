@@ -11,7 +11,7 @@ import com.facebook.react.bridge.WritableArray
 import com.facebook.react.bridge.WritableMap
 import io.bemappy.sdk.loadables.Map
 import io.bemappy.sdk.loadables.Scene
-import io.bemappy.sdk.models.BreadcrumbPayload
+import io.bemappy.sdk.models.AppTrackingInfo
 import io.bemappy.sdk.models.Data
 import io.bemappy.sdk.models.GeoReference
 import io.bemappy.sdk.models.TerrainPercentage
@@ -83,7 +83,7 @@ class RNViewModel : ViewModel() {
         Log.e("MapDownload", "Venue: " + venue.data.name)
 
         TrackingService.createInstance(context).changeTrackingPayload(
-            BreadcrumbPayload(
+            AppTrackingInfo(
                 selectedResort = venue.data.name
             )
         )
